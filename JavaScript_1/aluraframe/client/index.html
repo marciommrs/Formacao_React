@@ -60,9 +60,22 @@
     </table>
     <script src="js/app/helpers/DateHelper.js"></script>
     <script src="js/app/models/Negociacao.js"></script>
+    <script src="js/app/models/ListaNegociacoes.js"></script>
     <script src="js/app/controllers/NegociacaoController.js"></script>
     <script>
+        
         let negociacaoController = new NegociacaoController();
+
+        document.querySelector('#data').value = DateHelper.toDateInputValue(new Date());
+
+        //Carregar data padrão com timezone.
+        // Date.prototype.toDateInputValue = (function() {
+        //     var local = new Date(this);
+        //     local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+        //     return local.toJSON().slice(0,10);
+        // });
+        // document.querySelector('#data').value = new Date().toDateInputValue();
+
     </script>
     
 </body>
