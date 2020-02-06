@@ -17,4 +17,8 @@ class DateHelper {
   static dateToText(data) {
     return `${data.getDate()}/${data.getMonth()+1}/${data.getFullYear()}`;
   }
+
+  static toDateInputValue(data) {
+    return data.toJSON().slice(0,10);
+  }
 }
