@@ -9,17 +9,15 @@ class NegociacaoController {
     this._listaNegociacoes = new ListaNegociacoes();
     this._negociacoesView = new NegociacoesView($('#tabelaNegociacoes'));
 
-    this._negociacoesView.update();
+    this._negociacoesView.update(this._listaNegociacoes);
   }
 
   adiciona(event) {
     
     event.preventDefault();
-
     this._listaNegociacoes.adiciona(this._criaNegociacao()); 
+    this._negociacoesView.update(this._listaNegociacoes);
     this._limpaFormulario();
-    console.log(this._listaNegociacoes.negociacoes);
-    
   }
 
   _criaNegociacao() {
