@@ -53,19 +53,12 @@
     <script src="js/app/views/View.js"></script>
     <script src="js/app/views/NegociacoesView.js"></script>
     <script src="js/app/views/MensagemView.js"></script>
+    <script src="js/app/services/ProxyFactory.js"></script>
     <script>
         
         let negociacaoController = new NegociacaoController();
 
         document.querySelector('#data').value = DateHelper.toDateInputValue(new Date());
-
-        //Carregar data padrão com timezone.
-        // Date.prototype.toDateInputValue = (function() {
-        //     var local = new Date(this);
-        //     local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-        //     return local.toJSON().slice(0,10);
-        // });
-        // document.querySelector('#data').value = new Date().toDateInputValue();
 
     </script>
     
