@@ -28,8 +28,11 @@
     </form>
 
     <script src="js/app/helpers/DateHelper.js"></script>
+    <script src="js/app/services/HttpService.js"></script>
 
     <script>
+
+        document.querySelector('#data').value = DateHelper.toDateInputValue(new Date());
 
         function sendPost(event) {
 
@@ -47,7 +50,12 @@
                 valor: inputValor.value
             };
 
-            const xhr = new XMLHttpRequest();
+            const http = new HttpService();
+            http.post("/negociacoes", negociacao)
+            .then(alert('Negociação enviada com sucesso'))
+            .catch(erro => alert(`Não foi possível enviar a negociação: ${erro}`));
+
+            /*const xhr = new XMLHttpRequest();
             xhr.open("POST", "/negociacoes", true);
             xhr.setRequestHeader("Content-type", "application/json");
 
@@ -66,7 +74,7 @@
               }
             }
           }
-          xhr.send(JSON.stringify(negociacao));
+          xhr.send(JSON.stringify(negociacao));*/
         }
     </script>
 </body>
