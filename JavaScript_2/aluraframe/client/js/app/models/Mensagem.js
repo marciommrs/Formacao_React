@@ -1,8 +1,9 @@
 class Mensagem {
 
-  constructor(texto='') {
+  //Edge 13 não suporta parâmetros opcionais do ES6
+  constructor(texto) {
 
-    this._texto = texto;
+    this._texto = texto || '';
   }
 
   get texto() {
