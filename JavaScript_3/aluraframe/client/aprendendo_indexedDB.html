@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Aprendendo IndexedDB</title>
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/bootstrap-theme.css">
+</head>
+<body>
+
+  <div class="text-center">
+      <button class="btn btn-primary text-center" type="button" onclick="adiciona()">
+          Adiciona
+      </button>
+  </div>
+
+  <script src="js/app/models/Negociacao.js"></script>
+  <script>
+
+    //IDB Database
+    var connection;
+
+    var openRequest = window.indexedDB.open('aluraframe', 1);
+
+    openRequest.onupgradeneeded = function(event) {
+      console.log('Cria ou altera um banco já existente.');
+      let minhaConnection = event.target.result;
+
+      //Caso exista a objectStore negociacoes, ela será destruída.
+      if (minhaConnection.objectStoreNames.contains('negociacoes')) {
+        minhaConnection.deleteObjectStore('negociacoes');
+      }
+
+      // Define uma objectStore com autoIncrement.
+      minhaConnection.createObjectStore('negociacoes', {autoIncrement: true});
+    };
+
+    openRequest.onsuccess = function(event) {
+      console.log('Conexão obtida com sucesso.');
+      connection = event.target.result;
+    };
+
+    openRequest.onerror = function(event) {
+      console.log(event.target.error);
+    };
+
+    function adiciona() {
+      //Pegar uma transação dentro de uma conexão ({nome_object_store}, {tipo_da_transacao})
+      let transaction = connection.transaction(['negociacoes'], 'readwrite');
+      
+      //Pegar uma store transacional, recupero da transação a objectStore.
+      let store = transaction.objectStore('negociacoes');
+
+      let negociacao = new Negociacao(new Date(), 1, 200);
+
+      //Requisição solicitando para a store gravar.
+      let request = store.add(negociacao);
+
+      request.onsuccess = e => {
+        console.log('Negociação incluída com sucesso')
+      };
+
+      request.onerror = e => {
+        console.log('Não foi possível incluir a negociação')
+      }
+    }
+
+    //ObjectStore - tabela de um objeto relacional, mas não possue schema nem restrições.
+
+  </script>
+</body>
+</html>
