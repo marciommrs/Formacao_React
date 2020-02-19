@@ -31,16 +31,19 @@
     <script src="js/app/services/HttpService.js"></script>
 
     <script>
+        const hoje = DateHelper.toDateInputValue(new Date());
 
-        document.querySelector('#data').value = DateHelper.toDateInputValue(new Date());
+        const $ = document.querySelector.bind(document);
+        const inputData = $('#data');
+
+
+        inputData.value = hoje;
 
         function sendPost(event) {
 
             event.preventDefault();
             console.log("Enviando post");
 
-            const $ = document.querySelector.bind(document);
-            const inputData = $('#data');
             const inputQuantidade = $('#quantidade');
             const inputValor = $('#valor');
             
@@ -52,29 +55,14 @@
 
             const http = new HttpService();
             http.post("/negociacoes", negociacao)
-            .then(retorno => alert(`Mensagem no servidor: ${retorno}`))
-            .catch(erro => alert(`Não foi possível enviar a negociação: ${erro}`));
-
-            /*const xhr = new XMLHttpRequest();
-            xhr.open("POST", "/negociacoes", true);
-            xhr.setRequestHeader("Content-type", "application/json");
-
-            xhr.onreadystatechange = () => {
-
-            if (xhr.readyState == 4) {
-
-              if (xhr.status == 200) {
+            .then(retorno => {
                 inputData.value = '';
                 inputQuantidade.value = 1;
                 inputValor.value = 0.0;
                 inputData.focus();
-                alert('Negociação enviada com sucesso');
-              } else {
-                alert(`Não foi possível enviar a negociação: ${xhr.responseText}`);
-              }
-            }
-          }
-          xhr.send(JSON.stringify(negociacao));*/
+                alert(`Mensagem no servidor: ${retorno}`);
+            })
+            .catch(erro => alert(`Não foi possível enviar a negociação: ${erro}`));
         }
     </script>
 </body>
