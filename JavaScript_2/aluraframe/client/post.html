@@ -52,7 +52,7 @@
 
             const http = new HttpService();
             http.post("/negociacoes", negociacao)
-            .then(alert('Negociação enviada com sucesso'))
+            .then(retorno => alert(`Mensagem no servidor: ${retorno}`))
             .catch(erro => alert(`Não foi possível enviar a negociação: ${erro}`));
 
             /*const xhr = new XMLHttpRequest();
