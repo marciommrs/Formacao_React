@@ -12,6 +12,9 @@
       <button class="btn btn-primary text-center" type="button" onclick="adiciona()">
           Adiciona
       </button>
+      <button class="btn btn-primary text-center" type="button" onclick="listaTodos()">
+          Lista todos
+      </button>
   </div>
 
   <script src="js/app/models/Negociacao.js"></script>
@@ -65,7 +68,35 @@
       }
     }
 
-    //ObjectStore - tabela de um objeto relacional, mas não possue schema nem restrições.
+    function listaTodos() {
+      let transaction = connection.transaction(['negociacoes'], 'readwrite');
+      let store = transaction.objectStore('negociacoes');
+      let negociacoes = [];
+
+      //Recupera um ponteiro que referencia os itens da objectStore.
+      let cursor = store.openCursor();
+
+      cursor.onsuccess = e => {
+
+        let atual = e.target.result;
+
+        if (atual) {
+          let dado = atual.value;
+
+          negociacoes.push(new Negociacao(dado._data, dado._quatidade, dado._valor));
+          
+          atual.continue(); // Chama novamente o onsuccess.
+        } else {
+          console.log(negociacoes);
+        }
+      };
+
+      cursor.onerror = e => {
+        console.log(e.target.error.name);
+      };
+
+    }
+
 
   </script>
 </body>
