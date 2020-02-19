@@ -6,19 +6,25 @@ class DateHelper {
   
   static textToDate(text) {
     DateHelper.validateDataFormat(text);
-    return new Date(...text.split('-').map((item, indice) => item - indice % 2));
+    return new Date(...text.split('/').map((item, indice) => item - indice % 2));
   }
   
   static validateDataFormat(text) {
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(text))
-      throw new Error('Deve estar no formato aaaa-mm-dd');
+    console.log(text);
+    if (!/^\d{2}\/\d{2}\/\d{4}$/.test(text))
+      throw new Error('Deve estar no formato dd/mm/aaaa');
   }
 
   static dateToText(data) {
-    return `${data.getDate()}/${data.getMonth()+1}/${data.getFullYear()}`;
+    return `${data.getDate()}/${DateHelper.leftPad(data.getMonth()+1, 2, 0)}/${data.getFullYear()}`;
   }
 
   static toDateInputValue(data) {
     return data.toJSON().slice(0,10);
   }
+
+  static leftPad(value, totalWidth, paddingChar) {
+    var length = totalWidth - value.toString().length + 1;
+    return Array(length).join(paddingChar || '0') + value;
+  };
 }

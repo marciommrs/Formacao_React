@@ -22,9 +22,13 @@ class NegociacaoController {
   adiciona(event) {
 
     event.preventDefault();
-    this._listaNegociacoes.adiciona(this._criaNegociacao());
-    this._mensagem.texto = 'Negociação adicionada com sucesso';
-    this._limpaFormulario();
+    try {
+        this._listaNegociacoes.adiciona(this._criaNegociacao());
+        this._mensagem.texto = 'Negociação adicionada com sucesso'; 
+        this._limpaFormulario();   
+    } catch(erro) {
+        this._mensagem.texto = erro;
+    }
   }
 
   apaga() {
@@ -63,7 +67,7 @@ class NegociacaoController {
 
   _limpaFormulario() {
 
-    this._inputData.value = DateHelper.toDateInputValue(new Date());
+    this._inputData.value = DateHelper.dateToText(new Date());
     this._inputQuantidade.value = '1';
     this._inputValor.value = '0.0';
 
