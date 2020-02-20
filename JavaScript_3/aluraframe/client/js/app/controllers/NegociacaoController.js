@@ -44,7 +44,10 @@ class NegociacaoController {
       .then(negociacoes => 
         negociacoes.map(negociacao => 
           this._listaNegociacoes.adiciona(negociacao)))
-      .catch(erro => this._mensagem.texto = erro);
+      .catch(erro => {
+        console.log(erro);
+        this._mensagem.texto = 'Não foi possível listar as negociações';
+      });
   }
 
   apaga() {
