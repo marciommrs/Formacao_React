@@ -39,14 +39,12 @@ class NegociacaoController {
 
   _carregarNegociacoes() {
     ConnectionFactory.getConnection()
-    .then(connection => {
-      new NegociacaoDAO(connection)
-        .listaTodos()
-        .then(negociacoes => {
-          negociacoes.map(negociacao => this._listaNegociacoes.adiciona(negociacao))
-        })
-        .catch(erro => this._mensagem.texto = erro);
-    });
+      .then(connection => new NegociacaoDAO(connection))
+      .then(dao => dao.listaTodos())
+      .then(negociacoes => 
+        negociacoes.map(negociacao => 
+          this._listaNegociacoes.adiciona(negociacao)))
+      .catch(erro => this._mensagem.texto = erro);
   }
 
   apaga() {
