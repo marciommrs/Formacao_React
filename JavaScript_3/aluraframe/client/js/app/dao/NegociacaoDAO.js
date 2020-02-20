@@ -52,21 +52,19 @@ class NegociacaoDAO {
   }
 
 
-  removeTodos() {
+  apagaTodos() {
 
     return new Promise((resolve, reject) => {
       let request = this._connection
         .transaction([this._store], 'readwrite')
         .objectStore(this._store)
-        .remove(negociacao);
+        .clear();
 
-      request.onsuccess = e => {
-        resolve('');
-      };
+      request.onsuccess = e => resolve('Negociações apagadas com sucesso');
 
       request.onerror = e => {
         console.log(e.target.error);
-        reject('Não foi possível adicionar a negociação');
+        reject('Não foi possível apagar as negociações');
       }
     });
   }
