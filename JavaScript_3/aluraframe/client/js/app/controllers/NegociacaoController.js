@@ -18,7 +18,15 @@ class NegociacaoController {
       new MensagemView($('#mensagemAlerta')),
       'texto');
     
-      this._carregarNegociacoes();
+      this._init();
+    
+  }
+
+  _init() {
+    this._carregarNegociacoes();
+    setInterval(() => {
+      this._importaNegociacoes()
+    }, 3000)
   }
 
   adiciona(event) {
@@ -59,7 +67,7 @@ class NegociacaoController {
     
   }
 
-  importaNegociacoes() {
+  _importaNegociacoes() {
 
     let service = new NegociacaoService();
 
