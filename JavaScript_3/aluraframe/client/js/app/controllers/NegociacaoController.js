@@ -24,25 +24,25 @@ class NegociacaoController {
 
   _init() {
     this._carregarNegociacoes();
-    setInterval(() => {
-      this._importaNegociacoes()
-    }, 3000)
+    // setInterval(() => {
+    //   this._importaNegociacoes()
+    // }, 3000)
   }
 
   adiciona(event) {
     
     event.preventDefault();
 
-    ConnectionFactory.getConnection().then(connection => {
-      let negociacao = this._criaNegociacao();
-      new NegociacaoDAO(connection)
-        .adiciona(negociacao).then(() => {
-          this._listaNegociacoes.adiciona(this._criaNegociacao());
-          this._mensagem.texto = 'Negociação adicionada com sucesso'; 
-          this._limpaFormulario();
-        })
-        .catch(erro => this._mensagem.texto = erro);
-    });
+    let negociacao = this._criaNegociacao();
+    new NegociacaoService()
+      .cadastra(negociacao)
+      .then(mensagem => {
+        this._listaNegociacoes.adiciona(this._criaNegociacao());
+        this._mensagem.texto = mensagem; 
+        this._limpaFormulario();
+      })
+      .catch(erro => this._mensagem.texto = erro);
+
   }
 
   _carregarNegociacoes() {

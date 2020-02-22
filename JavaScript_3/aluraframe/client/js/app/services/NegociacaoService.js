@@ -56,4 +56,15 @@ class NegociacaoService {
         });
   }
 
+  cadastra(negociacao) {
+    return new Promise((resolve, reject) => {
+
+      ConnectionFactory.getConnection()
+        .then(connection => new NegociacaoDAO(connection))
+        .then(dao => dao.adiciona(negociacao))
+        .then(() => resolve('Negociação adicionada com sucesso'))
+        .catch(erro => reject(erro))
+    });
+  }
+
 }
