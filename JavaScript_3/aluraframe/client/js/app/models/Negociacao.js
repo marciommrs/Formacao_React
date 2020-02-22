@@ -1,7 +1,7 @@
 class Negociacao {
 
   constructor(_data, _quantidade, _valor) {
-    
+
     // constructor(data, quantidade, valor) {
     // this._data = new Data(data.getTime());
     // this._quantidade = quantidade;
@@ -11,7 +11,7 @@ class Negociacao {
     //   _data: new Date(data.getTime()),
     //   _quantidade: quantidade,
     //   _valor: valor});
-      
+
     Object.assign(this, { _quantidade, _valor }); //Atribuindo os parâmetros às proriedades de classe com o mesmo nome.
     this._data = new Date(_data.getTime());
     Object.freeze(this);
@@ -33,7 +33,9 @@ class Negociacao {
     return this._quantidade * this._valor;
   }
 
-  isEquals(outraNegociacao) {        
-    return JSON.stringify(this) == JSON.stringify(outraNegociacao)
-}
+  isEquals(outraNegociacao) {
+    // return this._data.getTime() == outraNegociacao.data.getTime()
+    //     && this._valor == outraNegociacao.valor;
+    return JSON.stringify(this) == JSON.stringify(outraNegociacao);
+  }
 }
