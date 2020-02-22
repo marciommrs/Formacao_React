@@ -67,4 +67,24 @@ class NegociacaoService {
     });
   }
 
+  lista() {
+    return new Promise((resolve, reject) => {
+      ConnectionFactory.getConnection()
+      .then(connection => new NegociacaoDAO(connection))
+      .then(dao => dao.listaTodos())
+      .then(negociacoes => resolve(negociacoes))
+      .catch(erro => reject(erro))
+    });
+  }
+
+  apaga() {
+    return new Promise((resolve, reject) => {
+      ConnectionFactory.getConnection()
+      .then(connection => new NegociacaoDAO(connection))
+      .then(dao => dao.apagaTodos())
+      .then(mensagem => resolve(mensagem))
+      .catch(erro => reject(erro));
+    });
+  }
+
 }

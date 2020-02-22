@@ -18,27 +18,28 @@ class NegociacaoController {
       new MensagemView($('#mensagemAlerta')),
       'texto');
     
-      this._init();
-    
+      this._service = new NegociacaoService();
+
+    this._init();
+
   }
 
   _init() {
     this._carregarNegociacoes();
-    // setInterval(() => {
-    //   this._importaNegociacoes()
-    // }, 3000)
+     setInterval(() => {
+       this._importaNegociacoes()
+     }, 3000)
   }
 
   adiciona(event) {
-    
+
     event.preventDefault();
 
     let negociacao = this._criaNegociacao();
-    new NegociacaoService()
-      .cadastra(negociacao)
+    this._service.cadastra(negociacao)
       .then(mensagem => {
         this._listaNegociacoes.adiciona(this._criaNegociacao());
-        this._mensagem.texto = mensagem; 
+        this._mensagem.texto = mensagem;
         this._limpaFormulario();
       })
       .catch(erro => this._mensagem.texto = erro);
@@ -46,34 +47,28 @@ class NegociacaoController {
   }
 
   _carregarNegociacoes() {
-    ConnectionFactory.getConnection()
-      .then(connection => new NegociacaoDAO(connection))
-      .then(dao => dao.listaTodos())
-      .then(negociacoes => 
-        negociacoes.map(negociacao => 
+    this._service
+      .lista()
+      .then(negociacoes =>
+        negociacoes.map(negociacao =>
           this._listaNegociacoes.adiciona(negociacao)))
       .catch(erro => this._mensagem.texto = erro);
   }
 
   apaga() {
-    ConnectionFactory.getConnection()
-      .then(connection => new NegociacaoDAO(connection))
-      .then(dao => dao.apagaTodos())
+    this._service.apaga()
       .then(mensagem => {
         this._listaNegociacoes.esvazia();
         this._mensagem.texto = mensagem;
       })
       .catch(erro => this._mensagem.texto = erro);
-    
   }
 
   _importaNegociacoes() {
 
-    let service = new NegociacaoService();
-
-    service.obterNegociacoes()
-      .then(negociacoes => 
-        negociacoes.filter(negociacao => 
+    this._service.obterNegociacoes()
+      .then(negociacoes =>
+        negociacoes.filter(negociacao =>
           !this._listaNegociacoes.negociacoes.some(negociacaoExistente =>
             JSON.stringify(negociacaoExistente) == JSON.stringify(negociacao))))
       .then(negociacoes => {
