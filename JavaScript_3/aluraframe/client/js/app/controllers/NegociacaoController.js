@@ -17,8 +17,8 @@ class NegociacaoController {
       new Mensagem(),
       new MensagemView($('#mensagemAlerta')),
       'texto');
-    
-      this._service = new NegociacaoService();
+
+    this._service = new NegociacaoService();
 
     this._init();
 
@@ -26,9 +26,9 @@ class NegociacaoController {
 
   _init() {
     this._carregarNegociacoes();
-     setInterval(() => {
-       this._importaNegociacoes()
-     }, 3000)
+    setInterval(() => {
+      this._importaNegociacoes()
+    }, 3000)
   }
 
   adiciona(event) {
@@ -56,7 +56,8 @@ class NegociacaoController {
   }
 
   apaga() {
-    this._service.apaga()
+    this._service
+      .apaga()
       .then(mensagem => {
         this._listaNegociacoes.esvazia();
         this._mensagem.texto = mensagem;
@@ -66,11 +67,7 @@ class NegociacaoController {
 
   _importaNegociacoes() {
 
-    this._service.obterNegociacoes()
-      .then(negociacoes =>
-        negociacoes.filter(negociacao =>
-          !this._listaNegociacoes.negociacoes.some(negociacaoExistente =>
-            JSON.stringify(negociacaoExistente) == JSON.stringify(negociacao))))
+    this._service.importa(this._listaNegociacoes.negociacoes)
       .then(negociacoes => {
         negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
         this._mensagem.texto = 'Negociacões importadas com sucesso';

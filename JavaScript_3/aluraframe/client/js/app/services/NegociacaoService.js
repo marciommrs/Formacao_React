@@ -57,34 +57,47 @@ class NegociacaoService {
   }
 
   cadastra(negociacao) {
-    return new Promise((resolve, reject) => {
-
-      ConnectionFactory.getConnection()
+      return ConnectionFactory.getConnection()
         .then(connection => new NegociacaoDAO(connection))
         .then(dao => dao.adiciona(negociacao))
-        .then(() => resolve('Negociação adicionada com sucesso'))
-        .catch(erro => reject(erro))
-    });
+        .then(() => 'Negociação adicionada com sucesso')
+        .catch(erro => {
+          console.log(erro);
+          throw new Error('Não foi possível adicionar a negociação');
+        });
   }
 
   lista() {
-    return new Promise((resolve, reject) => {
-      ConnectionFactory.getConnection()
-      .then(connection => new NegociacaoDAO(connection))
-      .then(dao => dao.listaTodos())
-      .then(negociacoes => resolve(negociacoes))
-      .catch(erro => reject(erro))
-    });
+      return ConnectionFactory.getConnection()
+        .then(connection => new NegociacaoDAO(connection))
+        .then(dao => dao.listaTodos())
+        .catch(erro => {
+          console.log(erro);
+          throw new Error('Não foi possível listar as negociações');
+        });
   }
 
   apaga() {
-    return new Promise((resolve, reject) => {
-      ConnectionFactory.getConnection()
-      .then(connection => new NegociacaoDAO(connection))
-      .then(dao => dao.apagaTodos())
-      .then(mensagem => resolve(mensagem))
-      .catch(erro => reject(erro));
-    });
+      return ConnectionFactory.getConnection()
+        .then(connection => new NegociacaoDAO(connection))
+        .then(dao => dao.apagaTodos())
+        .then(() => 'Negociações apagadas com sucesso')
+        .catch(erro => {
+          console.log(erro);
+          throw new Error('Não foi possível apagar as negociações');
+        });
+  }
+
+  importa(listaAtual) {
+      return this.obterNegociacoes()
+        .then(negociacoes =>
+          negociacoes.filter(negociacao =>
+            !listaAtual.some(negociacaoExistente =>
+              JSON.stringify(negociacaoExistente) == JSON.stringify(negociacao))))
+        .catch(erro => {
+          console.log(erro);
+          throw new Error('Não foi possível importar as negociações');
+        });
   }
 
 }
