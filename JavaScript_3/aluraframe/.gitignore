@@ -2,6 +2,7 @@
 
 # compiled output
 /server/node_modules
+/client/app
 
 # System Files
 .DS_Store
