@@ -7,7 +7,7 @@ Getting Started:
 
 1 - Acessar via terminal: ../aluraframe/client
 2 - Instalar pacotes: npm install
-2 - Executar a transcompilação do código com Babel: npm run build
+2 - Executar a transcompilação do código com Babel: npm run build ou npm run watch (compilação autmática)
 3 - Acessar via terminal: ../aluraframe/server
 4 - Instalar pacotes: npm install
 5 - Executar aplicação: npm start
