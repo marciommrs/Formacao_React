@@ -8,7 +8,7 @@ import {Bind} from '../helpers/Bind';
 import {DateHelper} from '../helpers/DateHelper';
 
 
-class NegociacaoController {
+export class NegociacaoController {
 
   constructor() {
 
