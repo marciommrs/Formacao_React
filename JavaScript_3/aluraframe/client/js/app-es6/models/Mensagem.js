@@ -1,4 +1,4 @@
-class Mensagem {
+export class Mensagem {
 
   //Edge 13 não suporta parâmetros opcionais do ES6
   constructor(texto) {
