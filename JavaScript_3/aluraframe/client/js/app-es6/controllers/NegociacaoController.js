@@ -8,7 +8,7 @@ import {Bind} from '../helpers/Bind';
 import {DateHelper} from '../helpers/DateHelper';
 
 
-export class NegociacaoController {
+class NegociacaoController {
 
   constructor() {
 
@@ -111,4 +111,11 @@ export class NegociacaoController {
     this._inputData.focus();
   }
 
+}
+
+let negociacaoController = new NegociacaoController();
+
+//Singleton
+export function currentInstance() {
+  return negociacaoController;
 }

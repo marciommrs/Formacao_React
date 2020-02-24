@@ -1,8 +1,8 @@
-import {NegociacaoController} from './controllers/NegociacaoController';
+import {currentInstance} from './controllers/NegociacaoController';
 import {DateHelper} from './helpers/DateHelper';
 import {} from './polyfill/fetch';
 
-let negociacaoController = new NegociacaoController();
+let negociacaoController = currentInstance();
 
 //O this do adiciona dentro de adiciona e apaga deve ser mantido, por isso o bind.
 document.querySelector('.form').onsubmit = negociacaoController.adiciona.bind(negociacaoController);
