@@ -4,6 +4,7 @@
 /server/node_modules
 /client/node_modules
 /client/app/*
+*/package-lock.json
 
 # System Files
 .DS_Store
