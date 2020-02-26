@@ -1,0 +1,10 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/server/node_modules
+/client/node_modules
+/client/app/*
+
+# System Files
+.DS_Store
+
