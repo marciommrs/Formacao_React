@@ -5,6 +5,7 @@
 /client/node_modules
 /client/app/*
 */package-lock.json
+/client/dist/bundle.js
 
 # System Files
 .DS_Store
